@@ -4,7 +4,26 @@
   <title>PushNotification</title>
 </head>
 <body>
-    <button type='button' id='myBtn'>Subscribe</button>
+    <style>
+        .container {
+          height: 200px;
+          position: relative;
+        }
+
+        .center {
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+    </style>
+    <div class="container">
+        <div class="center">
+            <button type='button' id='myBtn' style='font-size:40px'>Subscribe</button>
+        </div>
+    </div>
     <script>
         function updateButton(button, permission) {
             if (window.Notification.permission == 'granted') {
