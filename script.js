@@ -38,7 +38,9 @@ function subscribeUserToPush() {
         ),
       };
 
-      return registration.pushManager.subscribe(subscribeOptions);
+      sub = registration.pushManager.subscribe(subscribeOptions);
+      document.getElementById('subscription').innerText = JSON.stringify(sub)
+      return sub
     })
     .then(function (pushSubscription) {
       document.getElementById('subscription').innerText = JSON.stringify(pushSubscription)
@@ -64,4 +66,3 @@ if (!('Notification' in window)) {
 else {
     updateButton(button, window.Notification.permission)
 }
-
