@@ -1,1 +1,30 @@
-Hello World
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PushNotification</title>
+</head>
+<body>
+    <script>
+        Notification.requestPermission()
+        const button = document.createElement('button')
+        button.disabled = true
+        if (!'Notification' in window) {
+            button.innerText = 'Unsupported browser'
+        }
+        else if (window.Notification.permission == 'granted') {
+            button.innerText = 'Subscribed'
+        }
+        else if (window.Notification.permission == 'denied') {
+            button.innerText = 'Unsubscribed'
+        }
+        else {
+            button.innerText = 'Subscribe'
+            button.disabled = false
+            button.onclick = function() {
+                alert('Button is clicked')
+            }
+        }
+        document.body.appendChild(button)
+    </script>
+</body>
+</html>
