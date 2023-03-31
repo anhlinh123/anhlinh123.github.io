@@ -28,24 +28,24 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 function subscribeUserToPush() {
-  return navigator.serviceWorker
-    .register('/service-worker.js')
-    .then(function (registration) {
-      const subscribeOptions = {
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          'BIA7A6M5KRcpwI-M9CrYFrpmVameyihIjywOIUgmdA3p7NATE2SjIQ1UB-3qLgKvE3CHgsTIlgBX_7nnr5WO-3E',
-        ),
-      };
+    navigator.serviceWorker.register('/service-worker.js')
+    navigator.serviceWorker.ready.then((registration) => {
+        const subscribeOptions = {
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(
+                'BIA7A6M5KRcpwI-M9CrYFrpmVameyihIjywOIUgmdA3p7NATE2SjIQ1UB-3qLgKvE3CHgsTIlgBX_7nnr5WO-3E',
+            ),
+        };
 
-      sub = registration.pushManager.subscribe(subscribeOptions);
-      document.getElementById('subscription').innerText = JSON.stringify(sub)
-      return sub
+        registration.pushManager.subscribe(subscribeOptions).then(
+            (pushSubscription) => {
+                document.getElementById('subscription').innerText = JSON.stringify(pushSubscription)
+            },
+            (error) => {
+                document.getElementById('subscription').innerText = error
+            }
+        );
     })
-    .then(function (pushSubscription) {
-      document.getElementById('subscription').innerText = JSON.stringify(pushSubscription)
-      return pushSubscription;
-    });
 }
 
 const button = document.getElementById('myBtn')
