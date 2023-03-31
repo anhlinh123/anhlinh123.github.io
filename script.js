@@ -3,9 +3,12 @@ function updateButton(button, permission) {
         button.innerText = 'Subscribed'
         button.disabled = true
     }
-    if (window.Notification.permission == 'denied') {
+    else if (window.Notification.permission == 'denied') {
         button.innerText = 'Unsubscribed'
         button.disabled = true
+    }
+    else {
+        document.getElementById('subscription').innerText = 'Waiting for subscription...'
     }
 }
 
