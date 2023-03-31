@@ -5,25 +5,32 @@
 </head>
 <body>
     <script>
-        Notification.requestPermission()
+        function updateButton(button, permission) {
+            if (window.Notification.permission == 'granted') {
+                button.innerText = 'Subscribed'
+                button.disabled = true
+            }
+            if (window.Notification.permission == 'denied') {
+                button.innerText = 'Unsubscribed'
+                button.disabled = true
+            }
+        }
+
         const button = document.createElement('button')
-        button.disabled = true
+        button.innerText = 'Subscribe'
+        button.onclick = function() {
+            alert('Button is clicked')
+            Notification.requestPermission().then(function (result) {
+                updateButton(button, window.Notification.permission)
+            }
+        }
         if (!'Notification' in window) {
             button.innerText = 'Unsupported browser'
         }
-        else if (window.Notification.permission == 'granted') {
-            button.innerText = 'Subscribed'
-        }
-        else if (window.Notification.permission == 'denied') {
-            button.innerText = 'Unsubscribed'
-        }
         else {
-            button.innerText = 'Subscribe'
-            button.disabled = false
-            button.onclick = function() {
-                alert('Button is clicked')
-            }
+            updateButton(button, window.Notification.permission)
         }
+
         document.body.appendChild(button)
     </script>
 </body>
