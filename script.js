@@ -38,10 +38,7 @@ function subscribeUserToPush() {
       return registration.pushManager.subscribe(subscribeOptions);
     })
     .then(function (pushSubscription) {
-      alert(
-        'Received PushSubscription: ' +
-        JSON.stringify(pushSubscription),
-      );
+      document.getElementById('subscription').innerText = JSON.stringify(pushSubscription)
       return pushSubscription;
     });
 }
