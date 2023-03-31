@@ -16,13 +16,41 @@
             }
         }
 
+        function subscribeUserToPush() {
+          return navigator.serviceWorker
+            .register('/service-worker.js')
+            .then(function (registration) {
+              const subscribeOptions = {
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(
+                  'BIA7A6M5KRcpwI-M9CrYFrpmVameyihIjywOIUgmdA3p7NATE2SjIQ1UB-3qLgKvE3CHgsTIlgBX_7nnr5WO-3E',
+                ),
+              };
+
+              return registration.pushManager.subscribe(subscribeOptions);
+            })
+            .then(function (pushSubscription) {
+              alert(
+                'Received PushSubscription: ',
+                JSON.stringify(pushSubscription),
+              );
+              return pushSubscription;
+            });
+        }
+
         const button = document.createElement('button')
         button.innerText = 'Subscribe'
         button.onclick = function() {
-            alert('Button is clicked')
-            Notification.requestPermission().then(function (result) {
-                updateButton(button, window.Notification.permission)
-            }
+            Notification.requestPermission()
+                .then(function (result) {
+                    updateButton(button, result)
+                    return result
+                })
+                .then(function (result) {
+                    if (result == 'granted') { 
+                        subscribeUserToPush()
+                    }
+                })
         }
         if (!'Notification' in window) {
             button.innerText = 'Unsupported browser'
