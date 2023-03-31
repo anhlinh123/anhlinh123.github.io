@@ -72,6 +72,7 @@
         }
         if (!('Notification' in window)) {
             button.innerText = 'Unsupported browser'
+            button.disabled = true
         }
         else {
             updateButton(button, window.Notification.permission)
